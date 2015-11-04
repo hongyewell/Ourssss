@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ours_background"
+    android:orientation="vertical">
+    <CheckBox 
+        android:id="@+id/cb_rememberCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/ivory"
+        android:textSize="16sp"
+        android:text="自动登录"/>
+    
+    <EditText 
+        android:id="@+id/edt_username"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="180dp"
+        android:gravity="center"
+        android:background="@drawable/ours_username"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:hint="@string/username"/>
+    
+    
+      <EditText
+        android:id="@+id/edt_password" 
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+		android:gravity="center"
+        android:background="@drawable/ours_password"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:password="true"
+        android:hint="@string/password"/>"
+      
+      
+      <Button
+          android:id="@+id/btn_login" 
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:background="@drawable/ours_login"
+          android:layout_marginBottom="50dp"/>
+    
+</LinearLayout>

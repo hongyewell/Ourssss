@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="标题:" 
+            android:textSize="16dp"/>
+
+        <EditText
+            android:id="@+id/edit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请输入标题"
+            android:textSize="14dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="内容:"
+            android:textSize="16dp" />
+
+        <EditText
+            android:id="@+id/edit_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="请输入内容" 
+            android:textSize="14dp"/>
+    </LinearLayout>
+            
+    <Button 
+        android:id="@+id/btn_postInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="提交"
+        android:textSize="16dp"
+        android:layout_gravity="bottom"/>
+    
+
+</LinearLayout>
