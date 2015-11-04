@@ -38,7 +38,7 @@ public class WebUtil {
 	public List<Info> getInfoList(int page){
 		List<Info> infoList = new ArrayList<Info>();
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(getInfoURL+page+"/10");
+		HttpGet httpGet = new HttpGet(getInfoURL+page+"/6");
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {

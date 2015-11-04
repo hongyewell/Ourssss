@@ -105,7 +105,8 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 		num ++;
-		initData(num);
+		DataChange(num);
+		
 	}
 	
 	
@@ -123,6 +124,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 				Log.i("yeye", refreshList.size()+"");
 				return refreshList;
 			}
+			
 			protected void onPostExecute(List<Info> result) {
 				if (result.size() == 0) {
 					adapter.notifyDataSetChanged();
@@ -134,6 +136,42 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 					infoList.addAll(result);
 					adapter = new InfoAdapter(MainActivity.this, infoList);//注意这里是infoList，
 					infoListView.setAdapter(adapter);
+					adapter.notifyDataSetChanged();
+					infoListView.onRefreshComplete();
+					Toast.makeText(MainActivity.this, "加载了"+result.size()+"条数据..", Toast.LENGTH_SHORT).show();
+				}
+				
+			}
+			
+		}.execute(page); //传参数page
+
+	}
+	
+private void DataChange(int page) {
+		
+		new AsyncTask<Integer, Void, List<Info>>() { //使用Integer包装类
+			
+			@Override
+			protected List<Info> doInBackground(Integer... page) {
+				List<Info> refreshList = new ArrayList<Info>();
+				WebUtil webUtil = new WebUtil();
+				int pageNum = page[0];
+				refreshList = webUtil.getInfoList(pageNum);
+				Log.i("yeye", refreshList.size()+"");
+				return refreshList;
+			}
+			
+			protected void onPostExecute(List<Info> result) {
+				if (result.size() == 0) {
+					adapter.notifyDataSetChanged();
+					infoListView.onRefreshComplete();
+					Toast.makeText(MainActivity.this, "没有其他数据了耶...", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Log.i("infolist", infoList.toString());
+					infoList.addAll(result);
+				/*	adapter = new InfoAdapter(MainActivity.this, infoList);//注意这里是infoList，
+*/					/*infoListView.setAdapter(adapter);*/
 					adapter.notifyDataSetChanged();
 					infoListView.onRefreshComplete();
 					Toast.makeText(MainActivity.this, "加载了"+result.size()+"条数据..", Toast.LENGTH_SHORT).show();
