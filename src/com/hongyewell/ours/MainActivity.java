@@ -5,8 +5,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,10 +32,12 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	private List<Info> infoList = new ArrayList<Info>();
 	private InfoAdapter adapter;
 	private TextView tvUserName;
-	private Button btnPost;
+	private Button btnPost, btnExit;
 	private int num,id;
 	private Info info;
 	private String username;
+	private SharedPreferences pref;
+	private SharedPreferences.Editor editor;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +45,8 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 		infoListView = (PullToRefreshListView) findViewById(R.id.infoListView);
 		tvUserName = (TextView) findViewById(R.id.tv_username);
 		btnPost = (Button) findViewById(R.id.btn_post);
+		btnExit = (Button) findViewById(R.id.btn_exit);
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		Intent intent = getIntent();
 		username = intent.getStringExtra("username");
@@ -74,6 +80,19 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 				
 				Toast.makeText(MainActivity.this, info.getTitle(), Toast.LENGTH_SHORT).show();
 				
+			}
+		});
+		
+		//退出当前账号
+		btnExit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				editor = pref.edit();
+				editor.clear();
+				editor.commit();
+				Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+				startActivity(intent);
 			}
 		});
 	
@@ -147,7 +166,8 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 
 	}
 	
-private void DataChange(int page) {
+	//下拉加载数据
+	private void DataChange(int page) {
 		
 		new AsyncTask<Integer, Void, List<Info>>() { //使用Integer包装类
 			
@@ -170,8 +190,8 @@ private void DataChange(int page) {
 				else {
 					Log.i("infolist", infoList.toString());
 					infoList.addAll(result);
-				/*	adapter = new InfoAdapter(MainActivity.this, infoList);//注意这里是infoList，
-*/					/*infoListView.setAdapter(adapter);*/
+				/*	adapter = new InfoAdapter(MainActivity.this, infoList);//注意这里是infoList*/	
+				/*infoListView.setAdapter(adapter);*/
 					adapter.notifyDataSetChanged();
 					infoListView.onRefreshComplete();
 					Toast.makeText(MainActivity.this, "加载了"+result.size()+"条数据..", Toast.LENGTH_SHORT).show();
@@ -182,5 +202,7 @@ private void DataChange(int page) {
 		}.execute(page); //传参数page
 
 	}
+	
+	
 
 }

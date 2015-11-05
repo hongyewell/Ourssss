@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
 			edtUserName.setText(account);
 			edtPassword.setText(password);
 			ckRememberCB.setChecked(true);
-			userLogin();
+			/*userLogin();*/
 		}
         
         //µã»÷µÇÂ¼
