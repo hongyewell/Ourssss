@@ -45,7 +45,7 @@ public class InfoAdapter extends BaseAdapter{
 			viewHolder = new ViewHolder();
 			view = inflater.inflate(R.layout.info_item, null);
 			viewHolder.title = (TextView) view.findViewById(R.id.info_title);
-			viewHolder.author = (TextView) view.findViewById(R.id.info_author);
+			viewHolder.username = (TextView) view.findViewById(R.id.info_author);
 			viewHolder.time = (TextView) view.findViewById(R.id.info_publishedDate);
 			viewHolder.content = (TextView) view.findViewById(R.id.info_content);
 			view.setTag(viewHolder);
@@ -57,7 +57,7 @@ public class InfoAdapter extends BaseAdapter{
 		Info infoItem = iList.get(position);
 		
 		viewHolder.title.setText(infoItem.getTitle());
-		viewHolder.author.setText(infoItem.getAuthor());
+		viewHolder.username.setText(infoItem.getAuthor().getUsername());
 		viewHolder.time.setText(infoItem.getPublishedDate());
 		viewHolder.content.setText(infoItem.getContent());
 
@@ -66,7 +66,7 @@ public class InfoAdapter extends BaseAdapter{
 	
 	class ViewHolder{
 		TextView title;
-		TextView author;
+		TextView username;
 		TextView time;
 		TextView content;
 	}
