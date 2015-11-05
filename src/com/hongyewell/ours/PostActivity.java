@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
 public class PostActivity extends Activity {
@@ -22,6 +23,7 @@ public class PostActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_post);
 		
 		postInfoButton = (Button) findViewById(R.id.btn_postInfo);
@@ -63,5 +65,9 @@ public class PostActivity extends Activity {
 			}
 		});
 	}
-
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ActivityCollector.removeActivity(this);
+	}
 }

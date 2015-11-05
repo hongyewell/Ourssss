@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.hongyewell.pojo.Author;
 import com.hongyewell.pojo.User;
+import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
 
@@ -28,6 +29,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_login);
         
         btnLogin = (Button) findViewById(R.id.btn_login);
@@ -65,7 +67,7 @@ public class LoginActivity extends Activity {
 			}
 		});
        
-        
+    	
     }
     
     
@@ -114,5 +116,11 @@ public class LoginActivity extends Activity {
 			
 		}.execute();
     }
+    
+    @Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ActivityCollector.removeActivity(this);
+	}
     
 }

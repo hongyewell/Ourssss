@@ -1,6 +1,7 @@
 package com.hongyewell.ours;
 
 import com.hongyewell.pojo.Author;
+import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
 import android.app.Activity;
@@ -19,6 +20,7 @@ public class OursActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_ours);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		account = pref.getString("account", "");
@@ -59,5 +61,9 @@ public class OursActivity extends Activity {
 		}
 		
 	}
-
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ActivityCollector.removeActivity(this);
+	}
 }

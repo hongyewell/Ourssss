@@ -18,8 +18,9 @@
         android:text="自动登录"/>
     <Button 
         android:id="@+id/btn_toRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
         android:textColor="@color/ivory"
         android:textSize="16sp"
         android:text="注册"/>

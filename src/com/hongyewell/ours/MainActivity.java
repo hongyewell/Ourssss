@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -24,6 +26,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.hongyewell.adapter.InfoAdapter;
 import com.hongyewell.pojo.Info;
+import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
 public class MainActivity extends Activity implements PullToRefreshBase.OnRefreshListener2<ListView> {
@@ -32,7 +35,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	private List<Info> infoList = new ArrayList<Info>();
 	private InfoAdapter adapter;
 	private TextView tvUserName;
-	private Button btnPost, btnExit;
+	private Button btnPost, btnExit,btnQuit;
 	private int num,id;
 	private Info info;
 	private String username;
@@ -41,11 +44,13 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_main);
 		infoListView = (PullToRefreshListView) findViewById(R.id.infoListView);
 		tvUserName = (TextView) findViewById(R.id.tv_username);
 		btnPost = (Button) findViewById(R.id.btn_post);
 		btnExit = (Button) findViewById(R.id.btn_exit);
+		btnQuit = (Button) findViewById(R.id.btn_quit);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		Intent intent = getIntent();
@@ -93,6 +98,32 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 				editor.commit();
 				Intent intent = new Intent(MainActivity.this,LoginActivity.class);
 				startActivity(intent);
+			}
+		});
+		
+		//退出应用程序
+		btnQuit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+				dialog.setTitle("退出对话框");
+				dialog.setMessage("亲，确定要退出么？");
+				dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						ActivityCollector.finishAll();
+					}
+				});
+				dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						
+					}
+				});
+				dialog.show();
 			}
 		});
 	
@@ -203,6 +234,10 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 
 	}
 	
-	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ActivityCollector.removeActivity(this);
+	}
 
 }

@@ -1,6 +1,7 @@
 package com.hongyewell.ours;
 
 import com.hongyewell.pojo.Author;
+import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
 import android.app.Activity;
@@ -20,6 +21,7 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_register);
 		edtUserName = (EditText) findViewById(R.id.edit_username);
 		edtPassword = (EditText) findViewById(R.id.edit_password);
@@ -75,5 +77,9 @@ public class RegisterActivity extends Activity {
 			}
 		});
 	}
-
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ActivityCollector.removeActivity(this);
+	}
 }
