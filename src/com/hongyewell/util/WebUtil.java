@@ -17,12 +17,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hongyewell.pojo.Info;
 import com.hongyewell.pojo.User;
+import com.hongyewell.pojo.Author;
 
 public class WebUtil {
 	
@@ -37,8 +39,8 @@ public class WebUtil {
 	 * @param password
 	 * @return
 	 */
-	public String userRegister(String username,String password){
-		String result = "";
+	public int userRegister(String username,String password){
+		int state = 250;
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(registerURL);
@@ -51,16 +53,15 @@ public class WebUtil {
 			HttpResponse response = httpClient.execute(httpPost);
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				HttpEntity entity = response.getEntity();
-				result = EntityUtils.toString(entity,"utf-8");
+				String result = EntityUtils.toString(entity,"utf-8");
 				JSONObject nObject = new JSONObject(result);
-				result = nObject.getString("datas");
-				Log.i("why", result);
-			    return result;
+				state = nObject.getInt("code");
+			    return state;
 			}
 			
 		} catch (Exception e) {
 		}
-		return result;
+		return state;
 	}
 	
 	/**
@@ -69,8 +70,8 @@ public class WebUtil {
 	 * @param password
 	 * @return
 	 */
-	public User userLogin(String username,String password){
-		User user = new User();
+	public Author userLogin(String username,String password){
+		Author author = new Author();
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(loginURL);
@@ -88,26 +89,26 @@ public class WebUtil {
 				//ÅÐ¶ÏÊÇ·ñµÇÂ¼³É¹¦
 				int state = nObject.getInt("code");
 				if (state == 404) {
-					user.setId(-1);
-					return user;
+					author.setId(-1);
+					return author;
 				}else {
 					JSONObject nObject2 = nObject.getJSONObject("datas");
 					Gson gson = new Gson();
-					user = gson.fromJson(nObject2.toString(), User.class);
+					author = gson.fromJson(nObject2.toString(), Author.class);
 				/*	user.setId(nObject2.getInt("id"));
 					user.setUsername(nObject2.getString("username"));
 					user.setEmail(nObject2.getString("email"));
 					user.setPhotoUrl(nObject2.getString("photoUrl"));
 					user.setJoinedDate(nObject2.getString("joinedDate"));
 					user.setLastLogin(nObject2.getString("lastLogin"));*/
-					return user;
+					return author;
 				}
 				
 			}
 			
 		} catch (Exception e) {
 		}
-		return user;
+		return author;
 	}
 	
 	/**

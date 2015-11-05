@@ -13,12 +13,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hongyewell.pojo.Author;
 import com.hongyewell.pojo.User;
 import com.hongyewell.util.WebUtil;
 
 
 public class LoginActivity extends Activity {
-	private Button btnLogin;
+	private Button btnLogin,btnRegister;
 	private EditText edtUserName;
 	private EditText edtPassword;
 	private CheckBox ckRememberCB;
@@ -30,6 +31,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         
         btnLogin = (Button) findViewById(R.id.btn_login);
+        btnRegister = (Button) findViewById(R.id.btn_toRegister);
         edtUserName = (EditText) findViewById(R.id.edt_username);
         edtPassword = (EditText) findViewById(R.id.edt_password);
         ckRememberCB = (CheckBox) findViewById(R.id.cb_rememberCheck);
@@ -52,6 +54,16 @@ public class LoginActivity extends Activity {
 				userLogin();
 			}
 		});
+        
+        //点击注册
+        btnRegister.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+				startActivity(intent);
+			}
+		});
        
         
     }
@@ -59,22 +71,22 @@ public class LoginActivity extends Activity {
     
     //调用接口，用户登录
     private void userLogin(){
-    	new AsyncTask<Void, Integer, User>() {
+    	new AsyncTask<Void, Integer, Author>() {
 			//获取用户输入的用户名和密码
 			String username = edtUserName.getText().toString();
         	String password = edtPassword.getText().toString();
         	
 
 			@Override
-			protected User doInBackground(Void... arg0) {
-				User user = new User();
+			protected Author doInBackground(Void... arg0) {
+				Author author = new Author();
 				WebUtil webUtil = new WebUtil();
-				user = webUtil.userLogin(username, password);
-				return user;
+				author = webUtil.userLogin(username, password);
+				return author;
 			}
 			
 			@Override
-			protected void onPostExecute(User result) {
+			protected void onPostExecute(Author result) {
 				if (result.getId() == -1) {
 					Toast.makeText(LoginActivity.this, "亲，请检查用户名或密码是否正确~", Toast.LENGTH_SHORT).show();
 				}

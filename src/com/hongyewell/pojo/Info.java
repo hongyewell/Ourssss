@@ -2,7 +2,7 @@ package com.hongyewell.pojo;
 
 
 public class Info {
-	private author author;
+	private Author author;
 	private String content;
 	private int id;
 	private String publishedDate;
@@ -12,7 +12,7 @@ public class Info {
 		
 	}
 
-	public Info(com.hongyewell.pojo.author author, String content, int id,
+	public Info(com.hongyewell.pojo.Author author, String content, int id,
 			String publishedDate, String title) {
 		this.author = author;
 		this.content = content;
@@ -21,11 +21,11 @@ public class Info {
 		this.title = title;
 	}
 
-	public author getAuthor() {
+	public Author getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(author author) {
+	public void setAuthor(Author author) {
 		this.author = author;
 	}
 

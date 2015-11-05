@@ -2,11 +2,14 @@ package com.hongyewell.pojo;
 
 
 
-public class author {
+public class Author {
 	private String username;
 	private int id;
 	
-	public author(String username, int id) {
+	public Author(){
+		
+	}
+	public Author(String username, int id) {
 		this.username = username;
 		this.id = id;
 	}

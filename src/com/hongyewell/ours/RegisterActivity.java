@@ -1,8 +1,10 @@
 package com.hongyewell.ours;
 
+import com.hongyewell.pojo.Author;
 import com.hongyewell.util.WebUtil;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -30,17 +32,43 @@ public class RegisterActivity extends Activity {
 				username = edtUserName.getText().toString();
 				password = edtPassword.getText().toString();
 				//异步任务
-				new AsyncTask<Void, Void, String>() {
+				new AsyncTask<Void, Void, Integer>() {
 
 					@Override
-					protected String doInBackground(Void... arg0) {
+					protected Integer doInBackground(Void... arg0) {
 						WebUtil webUtil = new WebUtil();
-						String result = webUtil.userRegister(username, password);
+						int result = webUtil.userRegister(username, password);
 						return result;
 					}
 					@Override
-					protected void onPostExecute(String result) {
-						Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
+					protected void onPostExecute(Integer result) {
+						if (result == 400) {
+							Toast.makeText(RegisterActivity.this, "用户名已注册~", Toast.LENGTH_SHORT).show();
+						}
+						else {
+							Toast.makeText(RegisterActivity.this, "注册成功~", Toast.LENGTH_SHORT).show();
+							
+							new AsyncTask<Void, Integer, Author>() {
+								@Override
+								protected Author doInBackground(Void... arg0) {
+									Author author = new Author();
+									WebUtil webUtil = new WebUtil();
+									author = webUtil.userLogin(username, password);
+									return author;
+								}
+								
+								@Override
+								protected void onPostExecute(Author result) {
+										Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+										intent.putExtra("username", result.getUsername());
+										intent.putExtra("id", result.getId());
+									    startActivity(intent);
+										
+									}
+								
+							}.execute();
+						}
+						
 					}
 				}.execute();
 				
