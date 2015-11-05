@@ -33,7 +33,7 @@ public class RegisterActivity extends Activity {
 			public void onClick(View arg0) {
 				username = edtUserName.getText().toString();
 				password = edtPassword.getText().toString();
-				//异步任务
+				//寮傛浠诲姟
 				new AsyncTask<Void, Void, Integer>() {
 
 					@Override
@@ -45,10 +45,10 @@ public class RegisterActivity extends Activity {
 					@Override
 					protected void onPostExecute(Integer result) {
 						if (result == 400) {
-							Toast.makeText(RegisterActivity.this, "用户名已注册~", Toast.LENGTH_SHORT).show();
+							Toast.makeText(RegisterActivity.this, "鐢ㄦ埛鍚嶅凡娉ㄥ唽~", Toast.LENGTH_SHORT).show();
 						}
 						else {
-							Toast.makeText(RegisterActivity.this, "注册成功~", Toast.LENGTH_SHORT).show();
+							Toast.makeText(RegisterActivity.this, "娉ㄥ唽鎴愬姛~", Toast.LENGTH_SHORT).show();
 							
 							new AsyncTask<Void, Integer, Author>() {
 								@Override

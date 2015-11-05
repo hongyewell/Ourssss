@@ -2,6 +2,7 @@ package com.hongyewell.ours;
 
 import com.hongyewell.pojo.Author;
 import com.hongyewell.util.ActivityCollector;
+import com.hongyewell.util.NetStateUtil;
 import com.hongyewell.util.WebUtil;
 
 import android.app.Activity;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class OursActivity extends Activity {
@@ -22,43 +24,51 @@ public class OursActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_ours);
-		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		account = pref.getString("account", "");
-		password = pref.getString("password", "");
-		Log.i("why", "ÐÕÃû£º"+account+"ÃÜÂë£º"+password);
-		if (account == null || account.length() <= 0 || password == null || password.length() <= 0) {
-			new Handler().postDelayed(new Runnable(){
+		//åˆ¤æ–­æ˜¯å¦æœ‰ç½‘ç»œ
+		boolean flag = NetStateUtil.isAvailable(OursActivity.this);
+		if (flag) {
+			pref = PreferenceManager.getDefaultSharedPreferences(this);
+			account = pref.getString("account", "");
+			password = pref.getString("password", "");
+			Log.i("why", "å§“å:"+account+"å¯†ç ï¼š"+password);
+			if (account == null || account.length() <= 0 || password == null || password.length() <= 0) {
+				new Handler().postDelayed(new Runnable(){
 
-				@Override
-				public void run() {
-				    Intent intent = new Intent(OursActivity.this,LoginActivity.class);
-				    startActivity(intent);
-				    OursActivity.this.finish();
-				}
+					@Override
+					public void run() {
+					    Intent intent = new Intent(OursActivity.this,LoginActivity.class);
+					    startActivity(intent);
+					    OursActivity.this.finish();
+					}
 
-				}, 1500);  //¿ªÊ¼¶¯»­³ÖÐøÊ±¼ä
+					}, 1500);  //å¼€å§‹åŠ¨ç”»æŒç»­æ—¶é—´
+			}
+			else {
+				new AsyncTask<Void, Integer, Author>() {
+					@Override
+					protected Author doInBackground(Void... arg0) {
+						Author author = new Author();
+						WebUtil webUtil = new WebUtil();
+						author = webUtil.userLogin(account, password);
+						return author;
+					}
+					
+					@Override
+					protected void onPostExecute(Author result) {
+							Intent intent = new Intent(OursActivity.this,MainActivity.class);
+							intent.putExtra("username", result.getUsername());
+							intent.putExtra("id", result.getId());
+						    startActivity(intent);
+							
+						}
+					
+				}.execute();
+			}
 		}
 		else {
-			new AsyncTask<Void, Integer, Author>() {
-				@Override
-				protected Author doInBackground(Void... arg0) {
-					Author author = new Author();
-					WebUtil webUtil = new WebUtil();
-					author = webUtil.userLogin(account, password);
-					return author;
-				}
-				
-				@Override
-				protected void onPostExecute(Author result) {
-						Intent intent = new Intent(OursActivity.this,MainActivity.class);
-						intent.putExtra("username", result.getUsername());
-						intent.putExtra("id", result.getId());
-					    startActivity(intent);
-						
-					}
-				
-			}.execute();
+			Toast.makeText(OursActivity.this, "äº²ï¼Œè¯·å…ˆè¿žæŽ¥ç½‘ç»œå“Ÿ~", Toast.LENGTH_SHORT).show();
 		}
+		
 		
 	}
 	@Override

@@ -41,7 +41,7 @@ public class PostActivity extends Activity {
 				inputContent = editContent.getText().toString();
 				
 				if (inputTitle == null || inputTitle.length() <= 0 || inputContent == null || inputContent.length() <= 0) {
-					Toast.makeText(PostActivity.this, "ƒ˙ø…ƒ‹ªπ√ª ‰»Î±ÍÃ‚ªÚƒ⁄»›o(>©n<)o",Toast.LENGTH_SHORT ).show();
+					Toast.makeText(PostActivity.this, "ÊÇ®ÂèØËÉΩËøòÊ≤°ËæìÂÖ•Ê†áÈ¢òÊàñÂÜÖÂÆπo(>Ôπè<)o",Toast.LENGTH_SHORT ).show();
 				}
 				else 
 				{
@@ -56,7 +56,7 @@ public class PostActivity extends Activity {
 						}
 						
 					}.execute();
-					//Ã¯◊™÷¡÷˜“≥...
+					//Ë∑≥ËΩ¨Ëá≥‰∏ªÈ°µ...
 					Intent intent = new Intent(PostActivity.this,MainActivity.class);
 					intent.putExtra("username", username);
 					startActivity(intent);

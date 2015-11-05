@@ -5,7 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 
-//»î¶¯¹ÜÀíÆ÷
+//æ´»åŠ¨ç®¡ç†å™¨
 public class ActivityCollector {
 	public static List<Activity> activities = new ArrayList<Activity>();
 	public static void addActivity(Activity activity){

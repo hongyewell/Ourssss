@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hongyewell.pojo.Author;
-import com.hongyewell.pojo.User;
 import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
@@ -40,7 +39,7 @@ public class LoginActivity extends Activity {
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isRemember = pref.getBoolean("remember_password", false);
 		if (isRemember) {
-			//½«ÕËºÅºÍÃÜÂë¶¼ÉèÖÃµ½ÎÄ±¾¿òÖĞ
+			//å°†è´¦å·å’Œå¯†ç éƒ½è®¾ç½®åˆ°æ–‡æœ¬æ¡†ä¸­
 			String account = pref.getString("account", "");
 			String password = pref.getString("password", "");
 			edtUserName.setText(account);
@@ -48,8 +47,9 @@ public class LoginActivity extends Activity {
 			ckRememberCB.setChecked(true);
 			/*userLogin();*/
 		}
+		
         
-        //µã»÷µÇÂ¼
+		//ç‚¹å‡»ç™»å½•
         btnLogin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -57,7 +57,7 @@ public class LoginActivity extends Activity {
 			}
 		});
         
-        //µã»÷×¢²á
+        //ç‚¹å‡»æ³¨å†Œ
         btnRegister.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -71,10 +71,10 @@ public class LoginActivity extends Activity {
     }
     
     
-    //µ÷ÓÃ½Ó¿Ú£¬ÓÃ»§µÇÂ¼
+    //è°ƒç”¨æ¥å£ï¼Œç”¨æˆ·ç™»å½•
     private void userLogin(){
     	new AsyncTask<Void, Integer, Author>() {
-			//»ñÈ¡ÓÃ»§ÊäÈëµÄÓÃ»§ÃûºÍÃÜÂë
+    		//è·å–ç”¨æˆ·è¾“å…¥çš„ç”¨æˆ·åå’Œå¯†ç 
 			String username = edtUserName.getText().toString();
         	String password = edtPassword.getText().toString();
         	
@@ -90,12 +90,12 @@ public class LoginActivity extends Activity {
 			@Override
 			protected void onPostExecute(Author result) {
 				if (result.getId() == -1) {
-					Toast.makeText(LoginActivity.this, "Ç×£¬Çë¼ì²éÓÃ»§Ãû»òÃÜÂëÊÇ·ñÕıÈ·~", Toast.LENGTH_SHORT).show();
+					Toast.makeText(LoginActivity.this, "äº²ï¼Œè¯·æ£€æŸ¥ç”¨æˆ·åæˆ–å¯†ç æ˜¯å¦æ­£ç¡®~", Toast.LENGTH_SHORT).show();
 				}
 				else {
 					editor = pref.edit();
 					if (ckRememberCB.isChecked()) {
-						//¼ì²é¸´Ñ¡¿òÊÇ·ñ±»Ñ¡ÖĞ
+						//æ£€æŸ¥å¤é€‰æ¡†æ˜¯å¦è¢«é€‰ä¸­
 						editor.putBoolean("remember_password", true);
 						editor.putString("account", username);
 						editor.putString("password", password);
@@ -103,9 +103,9 @@ public class LoginActivity extends Activity {
 					}else {
 						editor.clear();
 					}
-					editor.commit();//Êı¾İÌá½»
+					editor.commit();//æ•°æ®æäº¤
 					String username = result.getUsername();
-					Toast.makeText(LoginActivity.this, username+"µÇÂ¼³É¹¦~", Toast.LENGTH_SHORT).show();
+					Toast.makeText(LoginActivity.this, username+"ç™»å½•æˆåŠŸ~", Toast.LENGTH_SHORT).show();
 					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 					intent.putExtra("username", result.getUsername());
 					intent.putExtra("id", result.getId());

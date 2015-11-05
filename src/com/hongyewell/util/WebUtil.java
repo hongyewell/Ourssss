@@ -34,7 +34,7 @@ public class WebUtil {
 	String registerURL = "http://miying.sinaapp.com/api/register/";
 	
 	/**
-	 * ÓÃ»§×¢²á
+	 * ç”¨æˆ·æ³¨å†Œ
 	 * @param username
 	 * @param password
 	 * @return
@@ -65,7 +65,7 @@ public class WebUtil {
 	}
 	
 	/**
-	 * ÓÃ»§µÇÂ¼
+	 * ç”¨æˆ·ç™»å½•
 	 * @param username
 	 * @param password
 	 * @return
@@ -86,7 +86,7 @@ public class WebUtil {
 				HttpEntity entity = response.getEntity();
 				String result = EntityUtils.toString(entity,"utf-8");
 				JSONObject nObject = new JSONObject(result);
-				//ÅĞ¶ÏÊÇ·ñµÇÂ¼³É¹¦
+				//åˆ¤æ–­æ˜¯å¦ç™»å½•æˆåŠŸ
 				int state = nObject.getInt("code");
 				if (state == 404) {
 					author.setId(-1);
@@ -112,7 +112,7 @@ public class WebUtil {
 	}
 	
 	/**
-	 * »ñÈ¡ĞÅÏ¢ÁĞ±í
+	 * è·å–ä¿¡æ¯åˆ—è¡¨
 	 * @param page
 	 * @return
 	 */
@@ -126,7 +126,7 @@ public class WebUtil {
 				HttpEntity entity = httpResponse.getEntity();
 				String result = EntityUtils.toString(entity,"utf-8");
 				
-				//JSON×Ö·û´®½âÎö
+				//JSONå­—ç¬¦ä¸²è§£æ
 				try {
 					JSONObject jObject = new JSONObject(result);
 				
@@ -159,7 +159,7 @@ public class WebUtil {
 	}
 	
 	/**
-	 * ·¢²¼ÏûÏ¢
+	 * å‘å¸ƒæ¶ˆæ¯
 	 * @param id
 	 * @param title
 	 * @param content
@@ -178,7 +178,7 @@ public class WebUtil {
 			HttpResponse response = httpClient.execute(httpPost);
 			
 			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				Log.i("why", "Ìá½»³É¹¦");
+				Log.i("why", "æäº¤æˆåŠŸ");
 			}
 			
 		} catch (Exception e) {

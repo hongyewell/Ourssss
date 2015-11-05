@@ -58,12 +58,12 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 		id = intent.getExtras().getInt("id");
 		tvUserName.setText("hello~"+username+"~");
 		
-		infoListView.setMode(Mode.BOTH);//Í¬Ê±Ö§³ÖÏÂÀ­Ë¢ĞÂºÍÏÂÀ­¼ÓÔØ
+		infoListView.setMode(Mode.BOTH);//åŒæ—¶æ”¯æŒä¸‹æ‹‰åˆ·æ–°å’Œä¸‹æ‹‰åŠ è½½
 		infoListView.setOnRefreshListener(this);
 		num = 1;		
 		initData(num);
 		
-		//·¢²¼Ò»Ìõ×´Ì¬
+		//å‘å¸ƒä¸€æ¡çŠ¶æ€
 		btnPost.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -75,7 +75,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 			}
 		});
 		
-		//ListViewµã»÷ÊÂ¼ş
+		//ListViewç‚¹å‡»äº‹ä»¶
 		infoListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -88,7 +88,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 			}
 		});
 		
-		//ÍË³öµ±Ç°ÕËºÅ
+		//é€€å‡ºå½“å‰è´¦å·
 		btnExit.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -101,22 +101,22 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 			}
 		});
 		
-		//ÍË³öÓ¦ÓÃ³ÌĞò
+		//é€€å‡ºåº”ç”¨ç¨‹åº
 		btnQuit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-				dialog.setTitle("ÍË³ö¶Ô»°¿ò");
-				dialog.setMessage("Ç×£¬È·¶¨ÒªÍË³öÃ´£¿");
-				dialog.setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
+				dialog.setTitle("é€€å‡ºç¨‹åº");
+				dialog.setMessage("äº²ï¼Œä½ çœŸçš„è¦é€€å‡ºäº†ä¹ˆï¼Ÿ");
+				dialog.setPositiveButton("ç¡®å®š", new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						ActivityCollector.finishAll();
 					}
 				});
-				dialog.setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener() {
+				dialog.setNegativeButton("å–æ¶ˆ", new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 		});
 	
 	}
-	//ÏÂÀ­Ë¢ĞÂ
+	//ä¸‹æ‹‰åˆ·æ–°
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 		new AsyncTask<Void, Void, List<Info>>(){
@@ -144,14 +144,14 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 				if (result.size() == 1) {
 					adapter.notifyDataSetChanged();
 					infoListView.onRefreshComplete();
-					Toast.makeText(MainActivity.this, "µÈÓªßäßäµÄ½Ó¿Ú...", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "ç­‰è¥å’ªå’ªçš„æ¥å£...", Toast.LENGTH_SHORT).show();
 				}
 				
 			};
 		}.execute();
 		
 	}
-	//ÉÏÀ­¼ÓÔØ
+	//ä¸Šæ‹‰åŠ è½½
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 		num ++;
@@ -160,10 +160,10 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	}
 	
 	
-	//·ÃÎÊÍøÂç£¬»ñÈ¡Êı¾İ
+	//è®¿é—®ç½‘ç»œï¼Œè·å–æ•°æ®
 	private void initData(int page) {
 		
-		new AsyncTask<Integer, Void, List<Info>>() { //Ê¹ÓÃInteger°ü×°Àà
+		new AsyncTask<Integer, Void, List<Info>>() { //ä½¿ç”¨IntegeråŒ…è£…ç±»
 			
 			@Override
 			protected List<Info> doInBackground(Integer... page) {
@@ -179,28 +179,28 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 				if (result.size() == 0) {
 					adapter.notifyDataSetChanged();
 					infoListView.onRefreshComplete();
-					Toast.makeText(MainActivity.this, "Ã»ÓĞÆäËûÊı¾İÁËÒ®...", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "æ²¡æœ‰å…¶ä»–æ•°æ®äº†è€¶...", Toast.LENGTH_SHORT).show();
 				}
 				else {
 					Log.i("infolist", infoList.toString());
 					infoList.addAll(result);
-					adapter = new InfoAdapter(MainActivity.this, infoList);//×¢ÒâÕâÀïÊÇinfoList£¬
+					adapter = new InfoAdapter(MainActivity.this, infoList);//æ³¨æ„è¿™é‡Œæ˜¯infoList
 					infoListView.setAdapter(adapter);
 					adapter.notifyDataSetChanged();
 					infoListView.onRefreshComplete();
-					Toast.makeText(MainActivity.this, "¼ÓÔØÁË"+result.size()+"ÌõÊı¾İ..", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "åŠ è½½äº†"+result.size()+"æ¡æ•°æ®..", Toast.LENGTH_SHORT).show();
 				}
 				
 			}
 			
-		}.execute(page); //´«²ÎÊıpage
+		}.execute(page); //ä¼ å‚æ•°page
 
 	}
 	
-	//ÏÂÀ­¼ÓÔØÊı¾İ
+	//ä¸‹æ‹‰åŠ è½½æ•°æ®
 	private void DataChange(int page) {
 		
-		new AsyncTask<Integer, Void, List<Info>>() { //Ê¹ÓÃInteger°ü×°Àà
+		new AsyncTask<Integer, Void, List<Info>>() { //ä½¿ç”¨IntegeråŒ…è£…ç±»
 			
 			@Override
 			protected List<Info> doInBackground(Integer... page) {
@@ -216,21 +216,21 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 				if (result.size() == 0) {
 					adapter.notifyDataSetChanged();
 					infoListView.onRefreshComplete();
-					Toast.makeText(MainActivity.this, "Ã»ÓĞÆäËûÊı¾İÁËÒ®...", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "æ²¡æœ‰å…¶ä»–æ•°æ®äº†è€¶...", Toast.LENGTH_SHORT).show();
 				}
 				else {
 					Log.i("infolist", infoList.toString());
 					infoList.addAll(result);
-				/*	adapter = new InfoAdapter(MainActivity.this, infoList);//×¢ÒâÕâÀïÊÇinfoList*/	
+				/*	adapter = new InfoAdapter(MainActivity.this, infoList);//æ³¨æ„è¿™é‡Œæ˜¯infoList*/	
 				/*infoListView.setAdapter(adapter);*/
 					adapter.notifyDataSetChanged();
 					infoListView.onRefreshComplete();
-					Toast.makeText(MainActivity.this, "¼ÓÔØÁË"+result.size()+"ÌõÊı¾İ..", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this, "åŠ è½½äº†"+result.size()+"æ¡æ•°æ®..", Toast.LENGTH_SHORT).show();
 				}
 				
 			}
 			
-		}.execute(page); //´«²ÎÊıpage
+		}.execute(page); //ä¼ å‚æ•°page
 
 	}
 	
