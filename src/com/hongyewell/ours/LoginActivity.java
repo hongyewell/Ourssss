@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hongyewell.pojo.Author;
+import com.hongyewell.pojo.User;
 import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
@@ -45,7 +46,6 @@ public class LoginActivity extends Activity {
 			edtUserName.setText(account);
 			edtPassword.setText(password);
 			ckRememberCB.setChecked(true);
-			/*userLogin();*/
 		}
 		
         
@@ -73,22 +73,22 @@ public class LoginActivity extends Activity {
     
     //调用接口，用户登录
     private void userLogin(){
-    	new AsyncTask<Void, Integer, Author>() {
+    	new AsyncTask<Void, Integer, User>() {
     		//获取用户输入的用户名和密码
 			String username = edtUserName.getText().toString();
         	String password = edtPassword.getText().toString();
         	
 
 			@Override
-			protected Author doInBackground(Void... arg0) {
-				Author author = new Author();
+			protected User doInBackground(Void... arg0) {
+				User user = new User();
 				WebUtil webUtil = new WebUtil();
-				author = webUtil.userLogin(username, password);
-				return author;
+				user = webUtil.userLogin(username, password);
+				return user;
 			}
 			
 			@Override
-			protected void onPostExecute(Author result) {
+			protected void onPostExecute(User result) {
 				if (result.getId() == -1) {
 					Toast.makeText(LoginActivity.this, "亲，请检查用户名或密码是否正确~", Toast.LENGTH_SHORT).show();
 				}
@@ -104,11 +104,11 @@ public class LoginActivity extends Activity {
 						editor.clear();
 					}
 					editor.commit();//数据提交
-					String username = result.getUsername();
 					Toast.makeText(LoginActivity.this, username+"登录成功~", Toast.LENGTH_SHORT).show();
 					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-					intent.putExtra("username", result.getUsername());
-					intent.putExtra("id", result.getId());
+					Bundle bundle = new Bundle();
+					bundle.putSerializable("user", result);
+					intent.putExtras(bundle);
 				    startActivity(intent);
 					
 				}

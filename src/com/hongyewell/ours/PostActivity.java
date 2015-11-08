@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hongyewell.pojo.User;
 import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
@@ -18,6 +19,7 @@ public class PostActivity extends Activity {
 	private EditText editTitle;
 	private EditText editContent;
 	private String inputTitle,inputContent,username;
+	private User user;
 	private String id;
 	
 	@Override
@@ -29,9 +31,11 @@ public class PostActivity extends Activity {
 		postInfoButton = (Button) findViewById(R.id.btn_postInfo);
 		editTitle = (EditText) findViewById(R.id.edit_title);
 		editContent = (EditText) findViewById(R.id.edit_content);
-		Intent intent = getIntent();
-		username = intent.getStringExtra("username");
-	    id =String.valueOf(intent.getExtras().getInt("id")) ;
+		Intent intent = this.getIntent();
+		Bundle bundle = intent.getExtras();
+		user = (User) bundle.getSerializable("user");
+		username = user.getUsername();
+	    id =String.valueOf(user.getId()) ;
 		
 		postInfoButton.setOnClickListener(new OnClickListener() {
 			
@@ -58,7 +62,9 @@ public class PostActivity extends Activity {
 					}.execute();
 					//跳转至主页...
 					Intent intent = new Intent(PostActivity.this,MainActivity.class);
-					intent.putExtra("username", username);
+					Bundle bundle = new Bundle();
+					bundle.putSerializable("user", user);
+					intent.putExtras(bundle);
 					startActivity(intent);
 				}
 				

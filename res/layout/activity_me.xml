@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="id"
+        android:textSize="16sp"/>
+     <TextView 
+        android:id="@+id/user_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名"
+        android:textSize="16sp"/>
+      <TextView 
+        android:id="@+id/user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="邮箱"
+        android:textSize="16sp"/>
+       <TextView 
+        android:id="@+id/user_joinedDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册时间"
+        android:textSize="16sp"/>
+        <TextView 
+        android:id="@+id/user_lastLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上次登录时间"
+        android:textSize="16sp"/>
+         <TextView 
+        android:id="@+id/user_photoURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="头像URL"
+        android:textSize="16sp"/>
+</LinearLayout>

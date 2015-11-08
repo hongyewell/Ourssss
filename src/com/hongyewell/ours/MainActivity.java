@@ -27,6 +27,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.hongyewell.adapter.InfoAdapter;
 import com.hongyewell.pojo.Info;
+import com.hongyewell.pojo.User;
 import com.hongyewell.util.ActivityCollector;
 import com.hongyewell.util.WebUtil;
 
@@ -36,11 +37,12 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	private List<Info> infoList = new ArrayList<Info>();
 	private InfoAdapter adapter;
 	private TextView tvUserName;
-	private Button  btnExit,btnQuit;
+	private Button  btnExit,btnQuit,btnMe;
 	private ImageView btnPost;
 	private int num,id;
 	private Info info;
 	private String username;
+	private User user;
 	private SharedPreferences pref;
 	private SharedPreferences.Editor editor;
 	@Override
@@ -53,11 +55,15 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 		btnPost = (ImageView) findViewById(R.id.btn_post);
 		btnExit = (Button) findViewById(R.id.btn_exit);
 		btnQuit = (Button) findViewById(R.id.btn_quit);
+		btnMe = (Button) findViewById(R.id.btn_me);
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		Intent intent = getIntent();
-		username = intent.getStringExtra("username");
-		id = intent.getExtras().getInt("id");
+		Intent intent = this.getIntent();
+		Bundle bundle = intent.getExtras();
+		user = (User) bundle.getSerializable("user");
+		username = user.getUsername();
+		id = user.getId();
+		Log.i("why", user.getJoinedDate()+".......");
 		tvUserName.setText(username);
 		
 		infoListView.setMode(Mode.BOTH);//同时支持下拉刷新和下拉加载
@@ -71,8 +77,9 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(MainActivity.this,PostActivity.class);
-				intent.putExtra("id", id);
-				intent.putExtra("username", username);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("user", user);
+				intent.putExtras(bundle);
 				startActivity(intent);
 			}
 		});
@@ -145,8 +152,23 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 				dialog.show();
 			}
 		});
+		
+		//关于我
+		btnMe.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MainActivity.this,MeActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("user", user);
+				intent.putExtras(bundle);
+				startActivity(intent);
+				
+			}
+		});
 	
 	}
+	
 	//下拉刷新
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {

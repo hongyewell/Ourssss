@@ -1,10 +1,5 @@
 package com.hongyewell.ours;
 
-import com.hongyewell.pojo.Author;
-import com.hongyewell.util.ActivityCollector;
-import com.hongyewell.util.NetStateUtil;
-import com.hongyewell.util.WebUtil;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +9,11 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.hongyewell.pojo.User;
+import com.hongyewell.util.ActivityCollector;
+import com.hongyewell.util.NetStateUtil;
+import com.hongyewell.util.WebUtil;
 
 
 public class OursActivity extends Activity {
@@ -44,20 +44,21 @@ public class OursActivity extends Activity {
 					}, 1500);  //开始动画持续时间
 			}
 			else {
-				new AsyncTask<Void, Integer, Author>() {
+				new AsyncTask<Void, Integer, User>() {
 					@Override
-					protected Author doInBackground(Void... arg0) {
-						Author author = new Author();
+					protected User doInBackground(Void... arg0) {
+						User user = new User();
 						WebUtil webUtil = new WebUtil();
-						author = webUtil.userLogin(account, password);
-						return author;
+						user = webUtil.userLogin(account, password);
+						return user;
 					}
 					
 					@Override
-					protected void onPostExecute(Author result) {
+					protected void onPostExecute(User result) {
 							Intent intent = new Intent(OursActivity.this,MainActivity.class);
-							intent.putExtra("username", result.getUsername());
-							intent.putExtra("id", result.getId());
+							Bundle bundle = new Bundle();
+							bundle.putSerializable("user", result);
+							intent.putExtras(bundle);
 						    startActivity(intent);
 							
 						}

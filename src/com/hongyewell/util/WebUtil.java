@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hongyewell.pojo.Author;
 import com.hongyewell.pojo.Info;
+import com.hongyewell.pojo.User;
 
 public class WebUtil {
 	
@@ -68,8 +69,8 @@ public class WebUtil {
 	 * @param password
 	 * @return
 	 */
-	public Author userLogin(String username,String password){
-		Author author = new Author();
+	public User userLogin(String username,String password){
+		User user = new User();
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(loginURL);
@@ -87,26 +88,20 @@ public class WebUtil {
 				//判断是否登录成功
 				int state = nObject.getInt("code");
 				if (state == 404) {
-					author.setId(-1);
-					return author;
+					user.setId(-1);
+					return user;
 				}else {
 					JSONObject nObject2 = nObject.getJSONObject("datas");
 					Gson gson = new Gson();
-					author = gson.fromJson(nObject2.toString(), Author.class);
-				/*	user.setId(nObject2.getInt("id"));
-					user.setUsername(nObject2.getString("username"));
-					user.setEmail(nObject2.getString("email"));
-					user.setPhotoUrl(nObject2.getString("photoUrl"));
-					user.setJoinedDate(nObject2.getString("joinedDate"));
-					user.setLastLogin(nObject2.getString("lastLogin"));*/
-					return author;
+					user = gson.fromJson(nObject2.toString(), User.class);
+					return user;
 				}
 				
 			}
 			
 		} catch (Exception e) {
 		}
-		return author;
+		return user;
 	}
 	
 	/**
@@ -130,18 +125,6 @@ public class WebUtil {
 				
 					Gson gson = new Gson();
 					infoList = gson.fromJson(jObject.getJSONArray("datas").toString(), new TypeToken<List<Info>>(){}.getType());
-					/*JSONArray jsonArray = jObject.getJSONArray("datas");
-					for (int i = 0; i < jsonArray.length(); i++) {
-						JSONObject nObject = (JSONObject) jsonArray.get(i);
-						Info info = new Info();
-						info.setId(nObject.getJSONObject("author").getInt("id"));
-						info.setTitle(nObject.getString("title"));
-						info.setContent(nObject.getString("content"));
-						info.setAuthor(nObject.getJSONObject("author").getString("username"));
-						info.setPublishedDate(nObject.getString("publishedDate"));
-						infoList.add(info);
-						Log.i("yeye", nObject.getString("title"));
-					}*/
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
