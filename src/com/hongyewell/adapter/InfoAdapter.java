@@ -55,11 +55,22 @@ public class InfoAdapter extends BaseAdapter{
 			viewHolder = (ViewHolder) view.getTag();
 		}
 		Info infoItem = iList.get(position);
-		
-		viewHolder.title.setText(infoItem.getTitle());
+		//截取标题
+		String title = infoItem.getTitle();
+		if (title.length()>10) {
+			title = infoItem.getTitle().substring(0,10)+"...";
+		}
+		viewHolder.title.setText(title);
 		viewHolder.username.setText(infoItem.getAuthor().getUsername());
-		viewHolder.time.setText(infoItem.getPublishedDate());
-		viewHolder.content.setText(infoItem.getContent());
+		//截取时间
+		String time = infoItem.getPublishedDate().substring(0,16);
+		viewHolder.time.setText(time);
+		//截取内容
+		String content = infoItem.getContent();
+		if (content.length()>50) {
+			content = content.substring(0,50)+"...";
+		}
+		viewHolder.content.setText(content);
 
 		return view;
 	}

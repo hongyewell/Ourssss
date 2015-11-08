@@ -17,14 +17,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.integer;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hongyewell.pojo.Info;
-import com.hongyewell.pojo.User;
 import com.hongyewell.pojo.Author;
+import com.hongyewell.pojo.Info;
 
 public class WebUtil {
 	
@@ -119,7 +117,7 @@ public class WebUtil {
 	public List<Info> getInfoList(int page){
 		List<Info> infoList = new ArrayList<Info>();
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(getInfoURL+page+"/6");
+		HttpGet httpGet = new HttpGet(getInfoURL+page+"/15");
 		try {
 			HttpResponse httpResponse = httpClient.execute(httpGet);
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {

@@ -2,16 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ivory"
     android:orientation="vertical">
     <TextView
 	        android:id="@+id/tv_username" 
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:textSize="18sp"
-	        android:textColor="@color/mediumturquoise"
+	        android:layout_marginTop="16dp"
+	        android:gravity="center"
+	        android:textColor="@color/darkblue"
+	        android:textSize="20sp"
 	        android:layout_weight="1"/>
-  
+    
+     <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_gray" />
+     
      <com.handmark.pulltorefresh.library.PullToRefreshListView 
         android:id="@+id/infoListView"
         android:layout_width="match_parent"
@@ -19,33 +25,51 @@
         android:layout_weight="7">
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
     
-      <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/rg_tab"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:background="#fafafa"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
         <Button
-            android:id="@+id/btn_post"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_weight="3"
-            android:text="发布"
-            android:textSize="14sp"/>
-         <Button
+            android:id="@+id/rb_home"
+            style="@style/RadioButtonBottomTab"
+            android:checked="true"
+            android:drawableTop="@drawable/icon_home"
+            android:textSize="12sp"
+            android:text="首页" />
+
+        <Button
             android:id="@+id/btn_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_weight="4"
-            android:text="退出账号"
-            android:textSize="14sp"/>
-          <Button
-            android:id="@+id/btn_quit"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_weight="3"
-            android:text="退出程序"
-            android:textSize="14sp"/>
+            style="@style/RadioButtonBottomTab"
+            android:drawableTop="@drawable/icon_meassage"
+            android:textSize="12sp"
+            android:text="退出账号" />
+
+        <ImageView
+             android:id="@+id/btn_post"
+            android:layout_width="56dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@drawable/icon_add"
+            android:background="@drawable/correct_oran_sel" />
+
+        <Button
+             android:id="@+id/btn_quit"
+            style="@style/RadioButtonBottomTab"
+            android:drawableTop="@drawable/icon_square"
+            android:textSize="12sp"
+            android:text="退出程序" />
+
+        <Button
+            android:drawableTop="@drawable/icon_selfinfo"
+            android:id="@+id/rb_user"
+            style="@style/RadioButtonBottomTab"
+            android:textSize="12sp"
+            android:text="我" />
     </LinearLayout>
-    
 
 </LinearLayout>
