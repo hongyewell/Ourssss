@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hongyewell.ours.R;
@@ -48,6 +49,7 @@ public class InfoAdapter extends BaseAdapter{
 			viewHolder.username = (TextView) view.findViewById(R.id.info_author);
 			viewHolder.time = (TextView) view.findViewById(R.id.info_publishedDate);
 			viewHolder.content = (TextView) view.findViewById(R.id.info_content);
+			/*viewHolder.photo = (ImageView) view.findViewById(R.id.info_photo);*/
 			view.setTag(viewHolder);
 			
 		}else {
@@ -71,6 +73,8 @@ public class InfoAdapter extends BaseAdapter{
 			content = content.substring(0,50)+"...";
 		}
 		viewHolder.content.setText(content);
+		//设置头像
+		/*viewHolder.photo.setImageBitmap();*/
 
 		return view;
 	}
@@ -80,6 +84,7 @@ public class InfoAdapter extends BaseAdapter{
 		TextView username;
 		TextView time;
 		TextView content;
+		/*ImageView photo;*/
 	}
 
 }

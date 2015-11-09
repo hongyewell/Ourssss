@@ -1,6 +1,11 @@
 package com.hongyewell.util;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +22,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.hongyewell.pojo.Author;
 import com.hongyewell.pojo.Info;
 import com.hongyewell.pojo.User;
 
@@ -164,6 +172,60 @@ public class WebUtil {
 			
 		} catch (Exception e) {
 		}
+		
+	}
+	
+	/**
+	 * 加载图片
+	 * @return
+	 */
+	public void showImageByAsyncTask(ImageView imageView,String url){
+		new NewsAsyncTask(imageView).execute(url);
+	}
+	//AsyncTask异步请求
+	private class NewsAsyncTask extends AsyncTask<String, Void, Bitmap>{
+		private ImageView mImageView;
+		//构造方法
+		public NewsAsyncTask(ImageView imageView){
+			mImageView = imageView;
+		}
+
+		@Override
+		protected Bitmap doInBackground(String... params) {
+			return getBitmapFromURL(params[0]);
+		}
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			super.onPostExecute(result);
+			mImageView.setImageBitmap(result);
+		}
+	}
+	//HttpURLConnection bitmap
+	public Bitmap getBitmapFromURL(String urlString){
+		Bitmap bitmap;
+		InputStream is = null;
+		try {
+			URL url = new URL(urlString);
+			try {
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				is = new BufferedInputStream(connection.getInputStream());
+				bitmap = BitmapFactory.decodeStream(is);
+				connection.disconnect();
+				return bitmap;
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 		
 	}
 
