@@ -19,8 +19,12 @@ public class Constant {
 		/**
 		 * 登录接口
 		 */
-		String LOGIN_URL = BASE_URL + "/login/";
+		String LOGIN_URL = BASE_URL + "/api/login/";
 		
+		/**
+		 * 查看用户信息接口
+		 */
+		String USER_INFO = BASE_URL + "//";
 	}
 	
 }
