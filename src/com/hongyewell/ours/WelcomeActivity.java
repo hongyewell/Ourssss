@@ -63,7 +63,9 @@ public class WelcomeActivity extends Activity {
 				}
 			}).display();
 		}else {
-			ToastUtil.show(WelcomeActivity.this, "没有更新", Toast.LENGTH_LONG);
+			ToastUtil.show(WelcomeActivity.this, "已是最新版本了！", Toast.LENGTH_SHORT);
+			Intent intent = new Intent(WelcomeActivity.this, OursActivity.class);
+			startActivity(intent);
 		}
 	}
 	
