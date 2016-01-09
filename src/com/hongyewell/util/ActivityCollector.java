@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-
 //活动管理器
 public class ActivityCollector {
 	public static List<Activity> activities = new ArrayList<Activity>();

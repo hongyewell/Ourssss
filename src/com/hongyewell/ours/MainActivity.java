@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActivityCollector.addActivity(this);
+//		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_main);
 		infoListView = (PullToRefreshListView) findViewById(R.id.infoListView);
 		tvUserName = (TextView) findViewById(R.id.tv_username);
@@ -139,7 +139,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 					
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
-						ActivityCollector.finishAll();
+//						ActivityCollector.finishAll();
 					}
 				});
 				dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -278,7 +278,7 @@ public class MainActivity extends Activity implements PullToRefreshBase.OnRefres
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		ActivityCollector.removeActivity(this);
+//		ActivityCollector.removeActivity(this);
 	}
 
 }

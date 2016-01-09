@@ -22,7 +22,7 @@ public class OursActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActivityCollector.addActivity(this);
+//		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_ours);
 		//判断是否有网络
 		boolean flag = NetStateUtil.isAvailable(OursActivity.this);
@@ -75,6 +75,6 @@ public class OursActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		ActivityCollector.removeActivity(this);
+//		ActivityCollector.removeActivity(this);
 	}
 }
