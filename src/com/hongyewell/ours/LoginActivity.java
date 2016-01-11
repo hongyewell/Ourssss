@@ -29,7 +29,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityCollector.addActivity(this);
+//        ActivityCollector.addActivity(this);
         setContentView(R.layout.activity_login);
         
         btnLogin = (Button) findViewById(R.id.btn_login);
@@ -47,7 +47,6 @@ public class LoginActivity extends Activity {
 			edtPassword.setText(password);
 			ckRememberCB.setChecked(true);
 		}
-		
         
 		//点击登录
         btnLogin.setOnClickListener(new OnClickListener() {
@@ -120,7 +119,7 @@ public class LoginActivity extends Activity {
     @Override
 	protected void onDestroy() {
 		super.onDestroy();
-		ActivityCollector.removeActivity(this);
+//		ActivityCollector.removeActivity(this);
 	}
     
 }

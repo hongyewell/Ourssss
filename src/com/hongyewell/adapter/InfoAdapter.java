@@ -25,7 +25,7 @@ public class InfoAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-		return iList.size();
+		return iList == null ? 0 : iList.size();
 	}
 
 	@Override

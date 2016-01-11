@@ -1,6 +1,8 @@
 package com.hongyewell.util;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -25,20 +27,116 @@ import org.json.JSONObject;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hongyewell.pojo.Info;
+import com.hongyewell.pojo.ResultData;
 import com.hongyewell.pojo.User;
+import com.hongyewell.pojo.VersionInfo;
 
 public class WebUtil {
+	public static final String TAG = "WebUtil";
 	
 	String getInfoURL = "http://miying.sinaapp.com/api/posts/";
 	String loginURL = "http://miying.sinaapp.com/api/login/";
 	String postInfoURL = "http://miying.sinaapp.com/api/post/";
 	String registerURL = "http://miying.sinaapp.com/api/register/";
+
+	/**
+	 * 发送post请求，返回实体类
+	 * 
+	 * @author miying
+	 * @param url
+	 * @return T
+	 */
+	public static <T> T getResultAsObject(String url, Class<T> clazz) {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		try {
+			HttpResponse response = httpClient.execute(httpPost);
+			int statusCode = response.getStatusLine().getStatusCode();
+			if(statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				String result = EntityUtils.toString(entity, "utf-8");
+				@SuppressWarnings("unchecked")
+				ResultData<T> resultData = com.alibaba.fastjson.JSONObject.parseObject(result, ResultData.class);
+				com.alibaba.fastjson.JSONObject jsonObject  = (com.alibaba.fastjson.JSONObject) resultData.getResult();
+				String jsonString = jsonObject.toJSONString();
+				
+				return com.alibaba.fastjson.JSONObject.parseObject(jsonString, clazz);
+			}else {
+				Log.i(TAG, "--statusCode->>" + statusCode);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * http get请求下载文件
+	 * @param url
+	 * @return apk文件保存的路径
+	 */
+	public static String getResultAsFile(String url) {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpGet httpPost = new HttpGet(url);
+		FileOutputStream fos = null;
+		// sdcard的路径
+		File file = Environment.getExternalStorageDirectory();
+		
+		try {
+			HttpResponse response = httpClient.execute(httpPost);
+			int statusCode = response.getStatusLine().getStatusCode();
+			if(statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				byte[] bytes = EntityUtils.toByteArray(entity);
+				
+				if(Environment.getExternalStorageState()
+						.equals(Environment.MEDIA_MOUNTED)) {
+					fos = new FileOutputStream(new File(file, "Ours.apk"));
+					fos.write(bytes, 0, bytes.length);
+					// 返回apk的路径
+					return file.getAbsolutePath() + "/Ours.apk";
+				}
+				
+			}else {
+				Log.i(TAG, "--statusCode->>" + statusCode);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(fos != null) {
+					fos.close();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		
+		return "";
+	}
+	
+	/**
+	 * 获取应用最新的版本信息
+	 * @return
+	 */
+	public static VersionInfo getLatestVersionInfo() {
+		return getResultAsObject(Constant.VERSION_CODE_URL, VersionInfo.class);
+	}
+	
+	/**
+	 * 下载最新版本的apk
+	 * @return apk文件保存的路径
+	 */
+	public static String downloadApk(String url) {
+		return getResultAsFile(url);
+	}
 	
 	/**
 	 * 用户注册

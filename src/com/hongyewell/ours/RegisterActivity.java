@@ -22,7 +22,7 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActivityCollector.addActivity(this);
+//		ActivityCollector.addActivity(this);
 		setContentView(R.layout.activity_register);
 		edtUserName = (EditText) findViewById(R.id.edit_username);
 		edtPassword = (EditText) findViewById(R.id.edit_password);
@@ -82,6 +82,6 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		ActivityCollector.removeActivity(this);
+//		ActivityCollector.removeActivity(this);
 	}
 }
